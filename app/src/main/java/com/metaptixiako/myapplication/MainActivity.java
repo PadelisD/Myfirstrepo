@@ -15,6 +15,7 @@ import com.metaptixiako.myapplication.io.NavigationKeyWords;
 import com.metaptixiako.myapplication.io.NavigationKeyWordsListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static com.metaptixiako.myapplication.Utils.Command.*;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int REQ_CODE_SPEECH_CONFIRMATION = 150;
     private NavigationKeyWords nav;
-//    private TextToSpeech t1;
+    private TextToSpeech t1;
     String toSpeak = "Are you sure?";
     private TextView voiceInput;
     private Button speakButton;
@@ -45,19 +46,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void successFound(SupportedActions action) {
                 if (action == SupportedActions.navigate) {
-//                    t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-//                        @Override
-//                        public void onInit(int status) {
-//                            if (status != TextToSpeech.ERROR) {
-//                                t1.setLanguage(Locale.UK);
-//                                t1.setOnUtteranceProgressListener(mProgressListener);
-//                                t1.setSpeechRate(1.0f);
-//                                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-//                            }
-//                        }
-//                    });
-//                }
-//                if (action == SupportedActions.accept) {
+                   t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                t1.setLanguage(Locale.UK);
+                                t1.setOnUtteranceProgressListener(mProgressListener);
+                                t1.setSpeechRate(1.0f);
+                                HashMap<String,String> myHashmap = new HashMap<String, String>();
+                                myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "some message");
+                                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH,myHashmap);
+                            }
+                        }
+                    });
+                }
+                if (action == SupportedActions.accept) {
                     startNavigation();
                 }
             }
