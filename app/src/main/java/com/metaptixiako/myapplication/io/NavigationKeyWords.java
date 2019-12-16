@@ -19,7 +19,6 @@ public class NavigationKeyWords {
 
     WeakReference<NavigationKeyWordsListener> mListener;
 
-
     public void findKeyword(Intent data, Command.SupportedActions[] keywords) {
         ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
         Command.SupportedActions action = Command.getSpokenAction(results);
