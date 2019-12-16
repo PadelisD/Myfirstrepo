@@ -14,12 +14,13 @@ public class Command {
         nan
     }
 
-   private static String[] navigationActionsArray = {"navigate", "go", "move to"};
-   private static String[] acceptActionsArray = {"yes", "sure", "ok"};
-   private static String[] declineActionsArray = {"no", "nope"};
-   private static String[] goBackActionsArray = {"stop", "return", "back"};
+    private static String[] navigationActionsArray = {"navigate", "go", "move to"};
+    private static String[] acceptActionsArray = {"yes", "sure", "ok"};
+    private static String[] declineActionsArray = {"no", "nope"};
+    private static String[] goBackActionsArray = {"stop", "return", "back"};
 
     public static HashMap<SupportedActions, String[]> givenkeyWords = new HashMap<SupportedActions, String[]>();
+
     static {
         givenkeyWords.put(SupportedActions.navigate, navigationActionsArray);
         givenkeyWords.put(SupportedActions.accept, acceptActionsArray);
@@ -28,7 +29,7 @@ public class Command {
     }
 
     public static SupportedActions[] confirmationKeyWords() {
-        SupportedActions[] actions = {SupportedActions.accept};
+        SupportedActions[] actions = {SupportedActions.accept, SupportedActions.decline};
         return actions;
     }
 

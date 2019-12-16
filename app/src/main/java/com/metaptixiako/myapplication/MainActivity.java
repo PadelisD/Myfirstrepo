@@ -46,22 +46,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void successFound(SupportedActions action) {
                 if (action == SupportedActions.navigate) {
-                   t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                         @Override
                         public void onInit(int status) {
                             if (status != TextToSpeech.ERROR) {
                                 t1.setLanguage(Locale.UK);
                                 t1.setOnUtteranceProgressListener(mProgressListener);
                                 t1.setSpeechRate(1.0f);
-                                HashMap<String,String> myHashmap = new HashMap<String, String>();
+                                HashMap<String, String> myHashmap = new HashMap<String, String>();
                                 myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "some message");
-                                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH,myHashmap);
+                                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, myHashmap);
                             }
                         }
                     });
                 }
                 if (action == SupportedActions.accept) {
                     startNavigation();
+                } else if (action == SupportedActions.decline) {
+                    //nothing for now
                 }
             }
 

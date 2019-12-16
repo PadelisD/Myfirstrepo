@@ -49,9 +49,9 @@ public class Navigation extends AppCompatActivity {
                     t1.setLanguage(Locale.UK);
                     t1.setSpeechRate(1.0f);
                     t1.setOnUtteranceProgressListener(mProgressListener);
-                    HashMap<String,String> myHashmap = new HashMap<String, String>();
+                    HashMap<String, String> myHashmap = new HashMap<String, String>();
                     myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceID);
-                    t1.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH,myHashmap);
+                    t1.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, myHashmap);
                 }
             }
         });
@@ -75,9 +75,9 @@ public class Navigation extends AppCompatActivity {
 
     private void validateUsersRequest(String usersInput) {
         String toSpeak1 = "Are you sure you want to navigate to " + usersInput + "?";
-        HashMap<String,String> myHashmap = new HashMap<String, String>();
+        HashMap<String, String> myHashmap = new HashMap<String, String>();
         myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, validateDestinationConstant);
-        t1.speak(toSpeak1, TextToSpeech.QUEUE_FLUSH,myHashmap);
+        t1.speak(toSpeak1, TextToSpeech.QUEUE_FLUSH, myHashmap);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -114,29 +114,30 @@ public class Navigation extends AppCompatActivity {
 
         @Override
         public void onDone(String utteranceId) {
-            if(utteranceId.equals(destinationConstant)) {
+            if (utteranceId.equals(destinationConstant)) {
                 askSpeechInput(REQ_CODE_SPEECH_DESTINATION);
                 nav = new NavigationKeyWords();
                 nav.setlistener(new NavigationKeyWordsListener() {
                     @Override
                     public void successFound(Command.SupportedActions action) {
-                        if (action == Command.SupportedActions.goBack) {
-                            t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                                @Override
-                                public void onInit(int status) {
-                                    if (status != TextToSpeech.ERROR) {
-                                        t1.setLanguage(Locale.UK);
-                                        t1.setOnUtteranceProgressListener(mProgressListener);
-                                        t1.setSpeechRate(1.0f);
-                                        HashMap<String,String> myHashmap = new HashMap<String, String>();
-                                        myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "some message");
-                                        t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH,myHashmap);
-                                    }
-                                }
-                            });
-                        }
+
+                    }
+
+                    @Override
+                    public void failed() {
+                    }
+                });
+            } else if (utteranceId.equals(validateDestinationConstant)) {
+                askSpeechInput(REQ_CODE_SPEECH_CONFIRMATION);
+                nav = new NavigationKeyWords();
+                nav.setlistener(new NavigationKeyWordsListener() {
+                    @Override
+                    public void successFound(Command.SupportedActions action) {
                         if (action == Command.SupportedActions.accept) {
-                            finish();
+                            // TODO: 16/12/2019
+                        } else if (action == Command.SupportedActions.decline) {
+                            //loop
+                            speakTextWithAction("Where do you want to navigate?", destinationConstant);
                         }
                     }
 
@@ -144,9 +145,8 @@ public class Navigation extends AppCompatActivity {
                     public void failed() {
                     }
                 });
-            }else if (utteranceId.equals(validateDestinationConstant)) {
-
             }
         }
-    };}
-    //endregion
+    };
+}
+//endregion
