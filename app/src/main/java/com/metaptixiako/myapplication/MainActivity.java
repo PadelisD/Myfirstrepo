@@ -3,6 +3,7 @@ package com.metaptixiako.myapplication;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,15 +18,28 @@ public class MainActivity extends AppCompatActivity {
     private Button speakButton;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private static final String searchTerm = "navigation";
-
+    private TextToSpeech t1;
+String toSpeak = "are you sure ?";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         speakButton = (Button) findViewById(R.id.btnSpeak);
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.UK);
+                    t1.setSpeechRate(0.50f);
+                }
+            }
+        });
+
         speakButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+
+
                 askSpeechInput();
             }
         });
@@ -71,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        if (key) {
+        if (key) {                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+
             Intent intent = new Intent(this, Navigation.class);
             startActivityForResult(intent, 2);
         }
