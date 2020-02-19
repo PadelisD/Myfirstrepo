@@ -26,7 +26,7 @@ public class Navigation extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_DESTINATION = 200;
     private TextToSpeech t1;
     private NavigationKeyWords nav;
-    String toSpeak = "Are you sure?";
+   // String toSpeak = "Are you sure?";
     private final String destinationConstant = "declareDestination";
     private final String validateDestinationConstant = "validateDestination";
 
