@@ -1,19 +1,13 @@
-package com.metaptixiako.myapplication.io;
+package com.metaptixiako.myapplication.ViewModel;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.speech.RecognizerIntent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.speech.tts.TextToSpeech;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.metaptixiako.myapplication.Utils.Command;
+import com.metaptixiako.myapplication.ViewModel.Utils.Command;
 
 public class NavigationKeyWords {
 

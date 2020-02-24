@@ -1,4 +1,4 @@
-package com.metaptixiako.myapplication;
+package com.metaptixiako.myapplication.View;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,17 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.speech.RecognizerIntent;
 
-import com.metaptixiako.myapplication.Utils.Command;
-import com.metaptixiako.myapplication.io.NavigationKeyWords;
-import com.metaptixiako.myapplication.io.NavigationKeyWordsListener;
+import com.metaptixiako.myapplication.R;
+import com.metaptixiako.myapplication.ViewModel.MainActivityViewModelListener;
+import com.metaptixiako.myapplication.ViewModel.Utils.Command;
+import com.metaptixiako.myapplication.ViewModel.NavigationKeyWords;
+import com.metaptixiako.myapplication.ViewModel.NavigationKeyWordsListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-import static com.metaptixiako.myapplication.Utils.Command.confirmationKeyWords;
+import static com.metaptixiako.myapplication.ViewModel.Utils.Command.confirmationKeyWords;
 
-public class Navigation extends AppCompatActivity {
+public class Navigation extends AppCompatActivity {//implements MainActivityViewModelListener {
     private TextView but1, lv;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int REQ_CODE_SPEECH_CONFIRMATION = 150;
@@ -117,7 +119,7 @@ public class Navigation extends AppCompatActivity {
             if (utteranceId.equals(destinationConstant)) {
                 askSpeechInput(REQ_CODE_SPEECH_DESTINATION);
                 nav = new NavigationKeyWords();
-                nav.setlistener(new NavigationKeyWordsListener() {
+                nav.setlistener( new NavigationKeyWordsListener() {
                     @Override
                     public void successFound(Command.SupportedActions action) {
 

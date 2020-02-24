@@ -1,4 +1,4 @@
-package com.metaptixiako.myapplication.Utils;
+package com.metaptixiako.myapplication.ViewModel.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,5 @@
 package com.metaptixiako.myapplication.Service;
 
-public class BaseCommand {
+public interface BaseCommand {
+    String[] getActions();
 }
