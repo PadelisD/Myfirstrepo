@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import static com.metaptixiako.myapplication.ViewModel.Utils.Command.confirmationKeyWords;
 
-public class Navigation extends AppCompatActivity {//implements MainActivityViewModelListener {
+public class NavigationActivity extends AppCompatActivity {//implements MainActivityViewModelListener {
     private TextView but1, lv;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int REQ_CODE_SPEECH_CONFIRMATION = 150;

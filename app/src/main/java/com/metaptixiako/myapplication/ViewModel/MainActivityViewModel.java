@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 
 import com.metaptixiako.myapplication.R;
+import com.metaptixiako.myapplication.View.NavigationActivity;
 import com.metaptixiako.myapplication.ViewModel.Utils.Command;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                         mListener.get().say(toSpeak);
                     }
                     if (action == Command.SupportedActions.accept) {
-                        mListener.get().startNavigationActivity();
+                        mListener.get().startActivityForClass();
                     } else if (action == Command.SupportedActions.decline) {
                         //nothing for now
                     }
