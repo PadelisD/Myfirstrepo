@@ -4,20 +4,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.metaptixiako.myapplication.R;
 import com.metaptixiako.myapplication.ViewModel.MainActivityViewModel;
-import com.metaptixiako.myapplication.ViewModel.MainActivityViewModelListener;
+
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Locale;
 
 
-public class MainActivity extends BaseActivity { //implements MainActivityViewModelListener {
+public class MainActivity extends BaseActivity {
 
     private TextToSpeech t1;
     private TextView voiceInput;
@@ -46,13 +42,10 @@ public class MainActivity extends BaseActivity { //implements MainActivityViewMo
     }
 
     @Override
-    public void doneAction () {
+    public void doneAction (final String utteranceId) {
         mViewModel.askUser(mViewModel.REQ_CODE_SPEECH_CONFIRMATION);
     }
 
-    @Override
-    public void startActivityForClass() {
-        Intent intent = new Intent(this, NavigationActivity.class);
-        startActivityForResult(intent, 3);
+    public void doneTalking(final String utteranceID) {
     }
 }

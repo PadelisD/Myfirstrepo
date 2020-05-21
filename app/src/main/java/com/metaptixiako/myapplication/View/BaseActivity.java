@@ -43,16 +43,17 @@ public class BaseActivity extends AppCompatActivity implements MainActivityViewM
 
         @Override
         public void onDone(String utteranceId) {
-            doneAction();
+            doneAction(utteranceId);
         }
+
     };
 
-    public void doneAction() {
+    public void doneAction(final String utteranceId) {
 
     }
 
     @Override
-    public void say(final String message) {
+    public void say(final String message, final String utteranceID) {
         t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -61,16 +62,16 @@ public class BaseActivity extends AppCompatActivity implements MainActivityViewM
                     t1.setOnUtteranceProgressListener(mProgressListener);
                     t1.setSpeechRate(1.0f);
                     HashMap<String, String> myHashmap = new HashMap<String, String>();
-                    myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "some message");
+                    myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceID);
                     t1.speak(message, TextToSpeech.QUEUE_FLUSH, myHashmap);
                 }
             }
         });
     }
 
-    public void startActivityForClass() {
-//        Intent intent = new Intent(this, NavigationActivity.class);
-//        startActivityForResult(intent, 2);
+    public void startActivityForClass(Class className) {
+        Intent intent = new Intent(this, className);
+        startActivityForResult(intent, 0);
     }
 
     @Override
@@ -79,6 +80,3 @@ public class BaseActivity extends AppCompatActivity implements MainActivityViewM
     }
 
 }
-
-
-

@@ -21,14 +21,14 @@ import java.util.Locale;
 
 import static com.metaptixiako.myapplication.ViewModel.Utils.Command.confirmationKeyWords;
 
-public class NavigationActivity extends AppCompatActivity {//implements MainActivityViewModelListener {
+public class NavigationActivity extends BaseActivity {
     private TextView but1, lv;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int REQ_CODE_SPEECH_CONFIRMATION = 150;
     private final int REQ_CODE_SPEECH_DESTINATION = 200;
     private TextToSpeech t1;
     private NavigationKeyWords nav;
-   // String toSpeak = "Are you sure?";
+    // String toSpeak = "Are you sure?";
     private final String destinationConstant = "declareDestination";
     private final String validateDestinationConstant = "validateDestination";
 
@@ -40,23 +40,7 @@ public class NavigationActivity extends AppCompatActivity {//implements MainActi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        speakTextWithAction("start navigation. Where do you want to navigate?", destinationConstant);
-    }
-
-    private void speakTextWithAction(final String textToSpeak, final String utteranceID) {
-        t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.UK);
-                    t1.setSpeechRate(1.0f);
-                    t1.setOnUtteranceProgressListener(mProgressListener);
-                    HashMap<String, String> myHashmap = new HashMap<String, String>();
-                    myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceID);
-                    t1.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, myHashmap);
-                }
-            }
-        });
+        say("start navigation. Where do you want to navigate?", destinationConstant);
     }
 
     private void askSpeechInput(int code) {
@@ -79,7 +63,7 @@ public class NavigationActivity extends AppCompatActivity {//implements MainActi
         String toSpeak1 = "Are you sure you want to navigate to " + usersInput + "?";
         HashMap<String, String> myHashmap = new HashMap<String, String>();
         myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, validateDestinationConstant);
-        t1.speak(toSpeak1, TextToSpeech.QUEUE_FLUSH, myHashmap);
+        say(toSpeak1, validateDestinationConstant);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,6 +86,42 @@ public class NavigationActivity extends AppCompatActivity {//implements MainActi
                 }
                 break;
             }
+        }
+    }
+
+    @Override
+    public void doneAction(final String utteranceID) {
+        if (utteranceID.equals(destinationConstant)) {
+            askSpeechInput(REQ_CODE_SPEECH_DESTINATION);
+            nav = new NavigationKeyWords();
+            nav.setlistener( new NavigationKeyWordsListener() {
+                @Override
+                public void successFound(Command.SupportedActions action) {
+
+                }
+
+                @Override
+                public void failed() {
+                }
+            });
+        } else if (utteranceID.equals(validateDestinationConstant)) {
+            askSpeechInput(REQ_CODE_SPEECH_CONFIRMATION);
+            nav = new NavigationKeyWords();
+            nav.setlistener(new NavigationKeyWordsListener() {
+                @Override
+                public void successFound(Command.SupportedActions action) {
+                    if (action == Command.SupportedActions.accept) {
+                        // TODO: 16/12/2019
+                    } else if (action == Command.SupportedActions.decline) {
+                        //loop
+                        say("Where do you want to navigate?", destinationConstant);
+                    }
+                }
+
+                @Override
+                public void failed() {
+                }
+            });
         }
     }
 
@@ -139,7 +159,7 @@ public class NavigationActivity extends AppCompatActivity {//implements MainActi
                             // TODO: 16/12/2019
                         } else if (action == Command.SupportedActions.decline) {
                             //loop
-                            speakTextWithAction("Where do you want to navigate?", destinationConstant);
+                            say("Where do you want to navigate?", destinationConstant);
                         }
                     }
 
