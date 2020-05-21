@@ -49,7 +49,7 @@ public class BaseActivity extends AppCompatActivity implements MainActivityViewM
     };
 
     public void doneAction(final String utteranceId) {
-
+        //placeholder method, implemented in child activities
     }
 
     @Override

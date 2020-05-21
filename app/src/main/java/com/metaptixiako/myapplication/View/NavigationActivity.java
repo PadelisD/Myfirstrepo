@@ -11,6 +11,7 @@ import android.speech.RecognizerIntent;
 
 import com.metaptixiako.myapplication.R;
 import com.metaptixiako.myapplication.ViewModel.MainActivityViewModelListener;
+import com.metaptixiako.myapplication.ViewModel.NavigationActivityViewModel;
 import com.metaptixiako.myapplication.ViewModel.Utils.Command;
 import com.metaptixiako.myapplication.ViewModel.NavigationKeyWords;
 import com.metaptixiako.myapplication.ViewModel.NavigationKeyWordsListener;
@@ -31,6 +32,7 @@ public class NavigationActivity extends BaseActivity {
     // String toSpeak = "Are you sure?";
     private final String destinationConstant = "declareDestination";
     private final String validateDestinationConstant = "validateDestination";
+    private NavigationActivityViewModel mViewModel;
 
     private static Command.SupportedActions[] supportedKeyWords() {
         Command.SupportedActions[] actions = {Command.SupportedActions.goBack};
@@ -59,10 +61,8 @@ public class NavigationActivity extends BaseActivity {
         }
     }
 
-    private void validateUsersRequest(String usersInput) {
+    public void validateUsersRequest(String usersInput) {
         String toSpeak1 = "Are you sure you want to navigate to " + usersInput + "?";
-        HashMap<String, String> myHashmap = new HashMap<String, String>();
-        myHashmap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, validateDestinationConstant);
         say(toSpeak1, validateDestinationConstant);
     }
 
